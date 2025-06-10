@@ -1,0 +1,60 @@
+// Project Structure:
+// car-service-management/
+// ├── docker-compose.yml
+// ├── README.md
+// ├── pom.xml
+// └── src/
+//     └── main/
+//         ├── java/
+//         │   └── com/
+//         │       └── carservice/
+//         │           ├── CarServiceApplication.java
+//         │           ├── config/
+//         │           │   ├── KafkaConfig.java
+//         │           │   ├── SecurityConfig.java
+//         │           │   └── AsyncConfig.java
+//         │           ├── domain/
+//         │           │   ├── entity/
+//         │           │   │   ├── ServiceRequest.java
+//         │           │   │   ├── StatusHistory.java
+//         │           │   │   └── Client.java
+//         │           │   ├── enums/
+//         │           │   │   └── RequestStatus.java
+//         │           │   └── events/
+//         │           │       └── StatusChangeEvent.java
+//         │           ├── repository/
+//         │           │   ├── ServiceRequestRepository.java
+//         │           │   ├── StatusHistoryRepository.java
+//         │           │   └── ClientRepository.java
+//         │           ├── service/
+//         │           │   ├── ServiceRequestService.java
+//         │           │   ├── StatusTransitionService.java
+//         │           │   ├── NotificationService.java
+//         │           │   └── impl/
+//         │           │       ├── ServiceRequestServiceImpl.java
+//         │           │       ├── StatusTransitionServiceImpl.java
+//         │           │       └── NotificationServiceImpl.java
+//         │           ├── controller/
+//         │           │   └── ServiceRequestController.java
+//         │           ├── dto/
+//         │           │   ├── ServiceRequestDto.java
+//         │           │   ├── CreateServiceRequestDto.java
+//         │           │   └── StatusChangeDto.java
+//         │           ├── mapper/
+//         │           │   └── ServiceRequestMapper.java
+//         │           ├── messaging/
+//         │           │   ├── StatusChangeProducer.java
+//         │           │   └── StatusChangeConsumer.java
+//         │           ├── statemachine/
+//         │           │   └── ServiceRequestStateMachine.java
+//         │           └── exception/
+//         │               ├── GlobalExceptionHandler.java
+//         │               ├── InvalidStatusTransitionException.java
+//         │               └── ServiceRequestNotFoundException.java
+//         └── resources/
+//             ├── application.yml
+//             ├── application-docker.yml
+//             └── db/migration/
+//                 ├── V1__Create_client_table.sql
+//                 ├── V2__Create_service_request_table.sql
+//                 └── V3__Create_status_history_table.sql

@@ -1,0 +1,165 @@
+###
+# STO Service Request API Tests
+###
+
+### Variables
+@baseUrl = http://localhost:8081/api/api
+@apiVersion = v1
+@contentType = application/json
+
+### Get all service requests
+GET {{baseUrl}}/{{apiVersion}}/service-requests
+Accept: {{contentType}}
+
+### Get a specific service request by ID
+GET {{baseUrl}}/{{apiVersion}}/service-requests/1
+Accept: {{contentType}}
+
+### Get a service request by request number
+GET {{baseUrl}}/{{apiVersion}}/service-requests/number/SRQ-001
+Accept: {{contentType}}
+
+### Get service requests for a specific client
+GET {{baseUrl}}/{{apiVersion}}/service-requests/client/1
+Accept: {{contentType}}
+
+### Get service requests with pagination for a specific client
+GET {{baseUrl}}/{{apiVersion}}/service-requests/client/1?page=0&size=10&sort=createdAt,desc
+Accept: {{contentType}}
+
+### Get service requests by status
+GET {{baseUrl}}/{{apiVersion}}/service-requests/status/IN_PROGRESS
+Accept: {{contentType}}
+
+### Get service requests by status with pagination
+GET {{baseUrl}}/{{apiVersion}}/service-requests/status/COMPLETED?page=0&size=5
+Accept: {{contentType}}
+
+### Create a new service request
+POST {{baseUrl}}/{{apiVersion}}/service-requests
+Content-Type: {{contentType}}
+
+{
+  "description": "Annual maintenance and oil change",
+  "carModel": "Toyota Camry",
+  "carYear": "2021",
+  "licensePlate": "ABC-123",
+  "clientId": 1,
+  "mechanicNotes": "Customer reported unusual noise when braking"
+}
+
+### Create another service request with different details
+POST {{baseUrl}}/{{apiVersion}}/service-requests
+Content-Type: {{contentType}}
+
+{
+  "description": "Check engine light is on, possible emissions system issue",
+  "carModel": "Honda Civic",
+  "carYear": "2020",
+  "licensePlate": "XYZ-789",
+  "clientId": 2,
+  "mechanicNotes": "Customer reported decreased fuel efficiency"
+}
+
+### Create a service request for tire replacement
+POST {{baseUrl}}/{{apiVersion}}/service-requests
+Content-Type: {{contentType}}
+
+{
+  "description": "Replace all four tires and perform wheel alignment",
+  "carModel": "Ford F-150",
+  "carYear": "2019",
+  "licensePlate": "TRK-456",
+  "clientId": 3,
+  "mechanicNotes": "Current tires are worn below safety threshold"
+}
+
+### Change status from CREATED to ACCEPTED
+PUT {{baseUrl}}/{{apiVersion}}/service-requests/1/status
+Content-Type: {{contentType}}
+
+{
+  "targetStatus": "ACCEPTED",
+  "reason": "Initial assessment completed",
+  "changedBy": "Mike Johnson"
+}
+
+### Change status from ACCEPTED to IN_PROGRESS
+PUT {{baseUrl}}/{{apiVersion}}/service-requests/1/status
+Content-Type: {{contentType}}
+
+{
+  "targetStatus": "IN_PROGRESS",
+  "reason": "Work has started",
+  "changedBy": "Sarah Williams"
+}
+
+### Change status from IN_PROGRESS to REPAIR_IN_PROGRESS
+PUT {{baseUrl}}/{{apiVersion}}/service-requests/1/status
+Content-Type: {{contentType}}
+
+{
+  "targetStatus": "REPAIR_IN_PROGRESS",
+  "reason": "Additional repairs required",
+  "changedBy": "Tom Wilson"
+}
+
+### Change status from REPAIR_IN_PROGRESS to COMPLETED
+PUT {{baseUrl}}/{{apiVersion}}/service-requests/1/status
+Content-Type: {{contentType}}
+
+{
+  "targetStatus": "COMPLETED",
+  "reason": "All repairs completed and quality check passed",
+  "changedBy": "Tom Wilson"
+}
+
+### Change status to CANCELLED
+PUT {{baseUrl}}/{{apiVersion}}/service-requests/2/status
+Content-Type: {{contentType}}
+
+{
+  "targetStatus": "CANCELLED",
+  "reason": "Customer requested cancellation",
+  "changedBy": "Mike Johnson"
+}
+
+### Delete a service request
+DELETE {{baseUrl}}/{{apiVersion}}/service-requests/3
+Accept: {{contentType}}
+
+### Create service request with minimum required fields
+POST {{baseUrl}}/{{apiVersion}}/service-requests
+Content-Type: {{contentType}}
+
+{
+  "carModel": "Mazda CX-5",
+  "carYear": "2022",
+  "licensePlate": "CX5-222",
+  "clientId": 4
+}
+
+### Test invalid request - missing required field
+POST {{baseUrl}}/{{apiVersion}}/service-requests
+Content-Type: {{contentType}}
+
+{
+  "description": "Broken validation test",
+  "carModel": "BMW X5",
+  "carYear": "2023",
+  "clientId": 5
+}
+
+### Test invalid status transition
+PUT {{baseUrl}}/{{apiVersion}}/service-requests/4/status
+Content-Type: {{contentType}}
+
+{
+  "targetStatus": "COMPLETED",
+  "reason": "Attempting invalid status transition",
+  "changedBy": "Test User"
+}
+
+### Get non-existent service request
+GET {{baseUrl}}/{{apiVersion}}/service-requests/999
+Accept: {{contentType}} 
